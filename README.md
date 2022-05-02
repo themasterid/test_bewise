@@ -58,8 +58,27 @@ DB_PORT='5432'
 SECRET_KEY=
 ALLOWED_HOSTS=
 ```
+- Запускаем контейнеры находясь в папке infra2:
+```bash
+sudo docker-compose up -d --build
+```
+- Затем применяем миграции, собираем статику:
+```bash
+sudo docker-compose exec backend python manage.py makemigrations
+sudo docker-compose exec backend python manage.py migrate --noinput 
+sudo docker-compose exec backend python manage.py createsuperuser
+sudo docker-compose exec backend python manage.py collectstatic --no-input
+```
 
-## Запуск проекта через Docker
+API будет доступно по адресу: http://your_ip/api/post/
+
+- Остановить:
+```bash
+sudo docker-compose stop/down
+```
+
+
+## Запуск проекта через Docker на локальной машине:
 - Устанавливаем Docker на localhost, пример для Linux:
 
 ```bash
@@ -83,7 +102,7 @@ ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
 DEBUG=False
 ```
 
-- Затем в папке infra2 выполнить команду, собираем контейнеры:
+- Затем в папке infra2 выполнить команду, запускаем контейнеры:
 
 ```bash
 sudo docker-compose up -d --build
@@ -101,6 +120,10 @@ sudo docker-compose exec backend python manage.py collectstatic --no-input
 API доступно на локальной машине по адресу: 
 ```text
 http://127.0.0.1/api/post/
+```
+- Остановить:
+```bash
+sudo docker-compose stop/down
 ```
 
 
