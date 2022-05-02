@@ -1,14 +1,23 @@
 ![foodgram-project-react Workflow Status](https://github.com/themasterid/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg?branch=master&event=push)
-# Продуктовый помощник Foodgram
+# Тестовое задание bewise
 
-Проект доступен по адресу http://62.84.115.143/recipes
+Задание доступно по адресу http://62.84.115.143/api/post
 
-## Описание проекта Foodgram
-«Продуктовый помощник»: приложение, на котором пользователи публикуют рецепты, подписываться на публикации других авторов и добавлять рецепты в избранное. Сервис «Список покупок» позволит пользователю создавать список продуктов, которые нужно купить для приготовления выбранных блюд.
+## Описание задания bewise
+- В сервисе реализовано REST API, принимающее на вход POST запросы с содержимым вида {"questions_num": integer}.
+- После получения запроса сервис, в свою очередь, запрашивает с публичного API (англоязычные вопросы для викторин) https://jservice.io/api/random?count=1 указанное в полученном запросе количество вопросов.
+- Далее, полученные ответы сохраняются в базе данных из п. 1, причем сохраняется как минимум следующая информация: 
+1. ID вопроса
+2. Текст вопроса
+3. Текст ответа
+4. Дата создания вопроса
+Если в БД имеется такой же вопрос, к публичному API с викторинами выполняются дополнительные запросы до тех пор, пока не будет получен уникальный вопрос для викторины.
+- Ответом на запрос из п.2.a предыдущей сохранённый вопрос для викторины. В случае его отсутствия - пустой объект.
+
 
 ## Запуск с использованием CI/CD
 
-Установить docker, docker-compose на сервере ВМ Yandex.Cloud:
+Установить docker, docker-compose на сервере виртуальной машины Yandex.Cloud:
 ```bash
 ssh username@ip
 sudo apt update && sudo apt upgrade -y && sudo apt install curl -y
@@ -16,17 +25,17 @@ sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-Создайте папку infra:
+Создаем папку infra:
 ```bash
 mkdir infra
 ```
-- Перенести файлы docker-compose.yml и default.conf на сервер.
+- Переносим файлы docker-compose.yml и default.conf на сервер.
 
 ```bash
-scp docker-compose.yml username@server_ip:/home/<username>/
-scp default.conf <username>@<server_ip>:/home/<username>/
+scp docker-compose.yml username@server_ip:/home/username/
+scp default.conf username@server_ip:/home/username/
 ```
-- Создайте файл .env в дериктории infra:
+- Создайте файл .env в дериктории infra, позже в него будем добавлять данные с git secrets:
 
 ```bash
 touch .env
@@ -35,7 +44,7 @@ touch .env
 
 ```python
 DB_ENGINE='django.db.backends.postgresql'
-DB_NAME=
+POSTGRES_DB=
 POSTGRES_USER=
 POSTGRES_PASSWORD=
 DB_HOST=db
@@ -43,8 +52,6 @@ DB_PORT='5432'
 SECRET_KEY=
 ALLOWED_HOSTS=
 ```
-
-Скопировать на сервер настройки docker-compose.yml, default.conf из папки infra.
 
 ## Запуск проекта через Docker
 - В папке infra выполнить команду, что бы собрать контейнер:
@@ -59,13 +66,6 @@ sudo docker-compose exec backend python manage.py makemigrations
 sudo docker-compose exec backend python manage.py migrate --noinput 
 sudo docker-compose exec backend python manage.py createsuperuser
 sudo docker-compose exec backend python manage.py collectstatic --no-input
-```
-
-Дополнительно можно наполнить DB ингредиентами и тэгами:
-
-```bash
-sudo docker-compose exec backend python manage.py load_tags
-sudo docker-compose exec backend python manage.py load_ingrs
 ```
 
 ## Запуск проекта в dev-режиме
@@ -96,5 +96,5 @@ python manage.py runserver
 
 ### Документация к API доступна после запуска
 ```url
-http://127.0.0.1/api/docs/
+http://127.0.0.1/api/post/
 ```
