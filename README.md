@@ -145,6 +145,27 @@ cd bewise
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
+- Создайте базу и пользователя в PosgreSQL:
+```bash
+sudo -u postgres psql
+CREATE DATABASE basename;
+CREATE USER username WITH ENCRYPTED PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE basename TO username;
+```
+
+- Прописываем данные для работы в dev режиме:
+
+```bash
+DB_ENGINE='django.db.backends.postgresql'
+POSTGRES_DB='basename'
+POSTGRES_USER='username'
+POSTGRES_PASSWORD='password'
+DB_HOST='db'
+DB_PORT='5432'
+SECRET_KEY='put_your_code'
+ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
+DEBUG=True
+```
 
 - Выполняем миграции, собираем статику, создаем администратора:
 
