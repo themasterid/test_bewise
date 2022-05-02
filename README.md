@@ -3,6 +3,16 @@
 
 Задание доступно по адресу http://62.84.115.143/api/post/
 
+# Стек
+- Python 3.10
+- Docker
+- docker-compose
+- Django 3
+- Django REST framework
+- CI/CD
+- PostgreSQL
+- Yandex.Cloud
+
 ## Описание задания bewise
 - В сервисе реализовано REST API, принимающее на вход POST запросы с содержимым вида {"questions_num": integer}.
 - После получения запроса сервис, в свою очередь, запрашивает с публичного API (англоязычные вопросы для викторин) https://jservice.io/api/random?count=1 указанное в полученном запросе количество вопросов.
