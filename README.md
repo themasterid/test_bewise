@@ -50,12 +50,36 @@ ALLOWED_HOSTS=
 ```
 
 ## Запуск проекта через Docker
-- В папке infra2 выполнить команду, что бы собрать контейнер:
+- Устанавливаем Docker на localhost, пример для Linux:
+
 ```bash
-sudo docker-compose up -d
+sudo apt update && sudo apt upgrade -y && sudo apt install curl -y
+sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-Для доступа к контейнеру выполните следующие команды:
+- В папке infra2 переименовываем файл .env_esample в .env и заполняем своими данными согласно шаблона:
+
+```bash
+DB_ENGINE='django.db.backends.postgresql'
+POSTGRES_DB='bewise'
+POSTGRES_USER='bewise_u'
+POSTGRES_PASSWORD='put_your_password'
+DB_HOST='db'
+DB_PORT='5432'
+SECRET_KEY='put_your_code'
+ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
+DEBUG=False
+```
+
+- Затем в папке infra2 выполнить команду, собираем контейнеры:
+
+```bash
+sudo docker-compose up -d --build
+```
+
+Для доступа к контейнеру backend выполните следующие команды, это позволит собрать статику, сделать миграции и если нужно создать администратора, для доступа в админку:
 
 ```bash
 sudo docker-compose exec backend python manage.py makemigrations
@@ -64,33 +88,44 @@ sudo docker-compose exec backend python manage.py createsuperuser
 sudo docker-compose exec backend python manage.py collectstatic --no-input
 ```
 
+API доступно на локальной машине по адресу: 
+```text
+http://127.0.0.1/api/post/
+```
+
+
 ## Запуск проекта в dev-режиме
 
-- Установить и активировать виртуальное окружение
+- Установить и активировать виртуальное окружение:
 
 ```bash
+python3 -m venv venv
 source /venv/bin/activated
 ```
 
 - Установить зависимости из файла requirements.txt
 
 ```bash
+cd bewise
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-- Выполнить миграции:
+- Выполняем миграции, собираем статику, создаем администратора:
 
 ```bash
+python manage.py makemigrations
 python manage.py migrate
+python manage.py collectstatic --no-input
+python manage.py createsuperuser
 ```
 
-- В папке с файлом manage.py выполнить команду:
+- Запускаем сервер:
 ```bash
 python manage.py runserver
 ```
 
 ### Документация к API доступна после запуска
-```url
+```text
 http://127.0.0.1/api/post/
 ```
