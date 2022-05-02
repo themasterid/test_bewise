@@ -1,3 +1,5 @@
+from typing import Any, Dict, List, Union
+
 import requests
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -6,24 +8,23 @@ from rest_framework.response import Response
 from .models import Requests
 
 
-def get_response(request):
+def get_response(request: Any) -> List[Dict[str, int]]:
     """
     Get request if questions_num > 1.
     """
-
-    request_ = request.data.get('questions_num', 1)
-    response = requests.get(
-        f'https://jservice.io/api/random?count={request_}')
-    return response.json()
+    url: str = 'https://jservice.io/api/random?count='
+    request_: int = request.data.get('questions_num', 1)
+    return requests.get(
+        f'{url}{request_}').json()
 
 
 @api_view(['post', 'get'])
-def get_questions(request):
+def get_questions(request: Any) -> Any:
     """
     Send POST requests: {"questions_num": integer}
     """
 
-    request_ = request.data.get('questions_num')
+    request_: Union[int, None] = request.data.get('questions_num')
     if request_ is None:
         return Response(
                     {'question': f'{Requests.objects.all().last()}'},
@@ -48,7 +49,7 @@ def get_questions(request):
         status=status.HTTP_204_NO_CONTENT)
 
 
-def get_unique(request):
+def get_unique(request: Any) -> Dict[str, int]:
     """
     Get a unique question from endpoint
     https://jservice.io/api/random?count=1
