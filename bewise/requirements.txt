@@ -1,0 +1,16 @@
+pytz==2022.1
+requests==2.27.1
+setuptools==58.1.0
+sqlparse==0.4.2
+tzdata==2022.1
+urllib3==1.26.9
+asgiref==3.4.1
+Django==3.2.13
+django-filter==21.1
+djangorestframework==3.12.4
+gunicorn==20.1.0
+isort==5.10.1
+psycopg2-binary==2.9.2
+reportlab==3.6.3
+python-dotenv==0.20.0
+django-environ==0.8.1
