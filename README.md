@@ -1,7 +1,7 @@
 [![test_bewise workflow](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml/badge.svg)](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml)
 # Тестовое задание bewise
 
-Задание доступно по адресу http://62.84.115.143/api/post
+Задание доступно по адресу http://62.84.115.143/api/post/
 
 ## Описание задания bewise
 - В сервисе реализовано REST API, принимающее на вход POST запросы с содержимым вида {"questions_num": integer}.
@@ -21,9 +21,9 @@ sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-Создаем папку infra:
+Создаем папку infra2:
 ```bash
-mkdir infra
+mkdir infra2
 ```
 - Переносим файлы docker-compose.yml и default.conf на сервер.
 
@@ -31,7 +31,7 @@ mkdir infra
 scp docker-compose.yml username@server_ip:/home/username/
 scp default.conf username@server_ip:/home/username/
 ```
-- Создайте файл .env в дериктории infra, позже в него будем добавлять данные с git secrets:
+- Создайте файл .env в дериктории infra2, позже в него будем добавлять данные с git secrets:
 
 ```bash
 touch .env
@@ -50,7 +50,7 @@ ALLOWED_HOSTS=
 ```
 
 ## Запуск проекта через Docker
-- В папке infra выполнить команду, что бы собрать контейнер:
+- В папке infra2 выполнить команду, что бы собрать контейнер:
 ```bash
 sudo docker-compose up -d
 ```
