@@ -35,28 +35,30 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```bash
 mkdir infra2
 ```
-- Переносим файлы docker-compose.yml и default.conf на сервер.
+- Переносим файлы docker-compose.yml, default.conf и .env на сервер в папку infra2.
 
 ```bash
-scp docker-compose.yml username@server_ip:/home/username/
-scp default.conf username@server_ip:/home/username/
+scp .env username@server_ip:/home/username/infra2/
+scp docker-compose.yml username@server_ip:/home/username/infra2/
+scp default.conf username@server_ip:/home/username/infra2/
 ```
-- Создайте файл .env в дериктории infra2, позже в него будем добавлять данные с git secrets:
+- Так же, можно создать пустой файл .env в дериктории infra2, позже в него будем добавлять данные с git secrets:
 
 ```bash
 touch .env
 ```
 - Заполнить в настройках репозитория секреты .env
 
-```python
+```bash
 DB_ENGINE='django.db.backends.postgresql'
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
-DB_HOST=db
+POSTGRES_DB='bewise'
+POSTGRES_USER='bewise_u'
+POSTGRES_PASSWORD='put_your_password'
+DB_HOST='db'
 DB_PORT='5432'
-SECRET_KEY=
-ALLOWED_HOSTS=
+SECRET_KEY='put_your_code'
+ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
+DEBUG=False
 ```
 - Запускаем контейнеры находясь в папке infra2:
 ```bash
