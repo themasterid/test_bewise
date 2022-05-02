@@ -59,7 +59,6 @@ jobs:
             sudo docker pull themasterid/bewise_test:latest
             cd infra2/
             sudo docker-compose stop
-            sudo docker-compose rm bewise
       - name: docker-compose up
         uses: appleboy/ssh-action@master
         with:
