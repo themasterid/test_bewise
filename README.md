@@ -135,7 +135,7 @@ sudo docker-compose stop/down
 
 ```bash
 python3 -m venv venv
-source /venv/bin/activated
+source venv/bin/activated
 ```
 
 - Установить зависимости из файла requirements.txt
