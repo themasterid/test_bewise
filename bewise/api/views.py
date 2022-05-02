@@ -20,10 +20,7 @@ def get_response(request):
 @api_view(['post', 'get'])
 def get_questions(request):
     """
-    Send POST requests on endpoint
-    https://jservice.io/api/random?count=1<br>
-    Content: {"questions_num": integer}<br>
-    Example: {"questions_num": 2}
+    Send POST requests: {"questions_num": integer}
     """
 
     request_ = request.data.get('questions_num')
