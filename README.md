@@ -1,7 +1,7 @@
 [![test_bewise workflow](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml/badge.svg)](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml)
 # Тестовое задание bewise
 
-Задание доступно по адресу ... в общем игнорят.
+Задание доступно по адресу ... отключено, так как после отправки тестового вакансию убрали в архив, фидбека не получил.
 
 # Стек
 - Python 3.10
