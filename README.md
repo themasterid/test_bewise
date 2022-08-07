@@ -24,17 +24,37 @@
 ## Запуск с использованием CI/CD
 
 Установить docker, docker-compose на сервере виртуальной машины Yandex.Cloud:
+
 ```bash
 ssh username@ip
+```
+
+```bash
 sudo apt update && sudo apt upgrade -y && sudo apt install curl -y
-sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh
+```
+
+```bash
+sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh 
+```
+
+```bash
+get-docker.sh && sudo rm get-docker.sh
+```
+
+```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+```bash
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-Создаем папку infra:
+
+Создаем папку infra на виртуальной машине:
+
 ```bash
 mkdir infra
 ```
+
 - Переносим файлы docker-compose.yml, default.conf и .env на сервер в папку infra.
 
 ```bash
@@ -130,6 +150,18 @@ sudo docker-compose stop/down
 
 
 ## Запуск проекта в dev-режиме
+
+- Клонируем репозиторий:
+
+```bash
+git clone git@github.com:themasterid/test_bewise.git
+```
+
+Переходим в папку с проектом:
+
+```bash
+cd test_bewise
+```
 
 - Установить и активировать виртуальное окружение (git bash):
 
