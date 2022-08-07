@@ -4,7 +4,7 @@ setuptools==63.4.2
 sqlparse==0.4.2
 tzdata==2022.1
 urllib3==1.26.11
-Django==4.1
+Django==3.2.15
 django-filter==22.1
 djangorestframework==3.13.1
 gunicorn==20.1.0
