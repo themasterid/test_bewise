@@ -12,6 +12,7 @@ def get_response(request: Any) -> List[Dict[str, int]]:
     """
     Get request if questions_num > 1.
     """
+
     url: str = 'https://jservice.io/api/random?count='
     request_: int = request.data.get('questions_num', 1)
     return requests.get(
@@ -22,6 +23,8 @@ def get_response(request: Any) -> List[Dict[str, int]]:
 def get_questions(request: Any) -> Any:
     """
     Send POST requests: {"questions_num": integer}
+    Example: {"questions_num": 1}
+    Maximum number 1 or <= 100
     """
 
     request_: Union[int, None] = request.data.get('questions_num')
@@ -58,6 +61,7 @@ def get_unique(request: Any) -> Dict[str, int]:
     for items in get_response(request):
         text_question = items.get('question'),
         if Requests.objects.filter(
-                text_question=text_question[0]).exists():
+                text_question=text_question[0]
+        ).exists():
             items = get_unique(request)
     return items
