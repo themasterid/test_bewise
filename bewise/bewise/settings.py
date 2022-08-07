@@ -74,7 +74,7 @@ DATABASES = {
             default='postgres'),
         'HOST': env(
             'DB_HOST',
-            default='db'),
+            default='127.0.0.1'),
         'PORT': env(
             'DB_PORT',
             default='5432'),
