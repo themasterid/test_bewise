@@ -59,32 +59,42 @@ mkdir infra
 
 ```bash
 scp .env username@server_ip:/home/username/infra/
+```
+
+```bash
 scp docker-compose.yml username@server_ip:/home/username/infra/
+```
+
+```bash
 scp default.conf username@server_ip:/home/username/infra/
 ```
+
 - Так же, можно создать пустой файл .env в директории infra, позже в него будем добавлять данные с git secrets:
 
 ```bash
 touch .env
 ```
-- Заполнить в настройках репозитория секреты .env
+- Заполнить в настройках репозитория секреты в .env
 
 ```bash
 DB_ENGINE='django.db.backends.postgresql'
-POSTGRES_DB='bewise'
-POSTGRES_USER='bewise_u'
-POSTGRES_PASSWORD='put_your_password'
-DB_HOST='db'
+POSTGRES_DB='bewise_test'
+POSTGRES_USER='tuser_bewise'
+POSTGRES_PASSWORD='@test#bewise'
+DB_HOST='127.0.0.1'
 DB_PORT='5432'
 SECRET_KEY='put_your_code'
 ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
 DEBUG=False
 ```
+
 - Запускаем контейнеры находясь в папке infra:
 ```bash
 sudo docker-compose up -d --build
 ```
+
 - Затем применяем миграции, собираем статику:
+
 ```bash
 sudo docker-compose exec backend python manage.py makemigrations
 sudo docker-compose exec backend python manage.py migrate --noinput 
@@ -114,10 +124,10 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ```bash
 DB_ENGINE='django.db.backends.postgresql'
-POSTGRES_DB='bewise'
-POSTGRES_USER='bewise_u'
-POSTGRES_PASSWORD='put_your_password'
-DB_HOST='db'
+POSTGRES_DB='bewise_test'
+POSTGRES_USER='tuser_bewise'
+POSTGRES_PASSWORD='@test#bewise'
+DB_HOST='127.0.0.1'
 DB_PORT='5432'
 SECRET_KEY='put_your_code'
 ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
