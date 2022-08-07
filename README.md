@@ -1,7 +1,7 @@
 [![test_bewise workflow](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml/badge.svg)](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml)
 # Тестовое задание bewise
 
-Задание доступно по адресу ... отключено, так как после отправки тестового вакансию убрали в архив, фидбека не получил.
+Задание доступно по адресу http://62.84.115.143 до 14.07.2022 г.
 
 # Стек
 - Python 3.10
@@ -31,18 +31,18 @@ sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-Создаем папку infra2:
+Создаем папку infra:
 ```bash
-mkdir infra2
+mkdir infra
 ```
-- Переносим файлы docker-compose.yml, default.conf и .env на сервер в папку infra2.
+- Переносим файлы docker-compose.yml, default.conf и .env на сервер в папку infra.
 
 ```bash
-scp .env username@server_ip:/home/username/infra2/
-scp docker-compose.yml username@server_ip:/home/username/infra2/
-scp default.conf username@server_ip:/home/username/infra2/
+scp .env username@server_ip:/home/username/infra/
+scp docker-compose.yml username@server_ip:/home/username/infra/
+scp default.conf username@server_ip:/home/username/infra/
 ```
-- Так же, можно создать пустой файл .env в дериктории infra2, позже в него будем добавлять данные с git secrets:
+- Так же, можно создать пустой файл .env в директории infra, позже в него будем добавлять данные с git secrets:
 
 ```bash
 touch .env
@@ -60,7 +60,7 @@ SECRET_KEY='put_your_code'
 ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
 DEBUG=False
 ```
-- Запускаем контейнеры находясь в папке infra2:
+- Запускаем контейнеры находясь в папке infra:
 ```bash
 sudo docker-compose up -d --build
 ```
@@ -90,7 +90,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-- В папке infra2 переименовываем файл .env_esample в .env и заполняем своими данными согласно шаблона:
+- В папке infra переименовываем файл .env_esample в .env и заполняем своими данными согласно шаблона:
 
 ```bash
 DB_ENGINE='django.db.backends.postgresql'
@@ -104,7 +104,7 @@ ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
 DEBUG=False
 ```
 
-- Затем в папке infra2 выполнить команду, запускаем контейнеры:
+- Затем в папке infra выполнить команду, запускаем контейнеры:
 
 ```bash
 sudo docker-compose up -d --build
@@ -131,10 +131,19 @@ sudo docker-compose stop/down
 
 ## Запуск проекта в dev-режиме
 
-- Установить и активировать виртуальное окружение:
+- Установить и активировать виртуальное окружение (git bash):
 
 ```bash
 python3 -m venv venv
+```
+
+Windows:
+```bash
+source venv/Scripts/activate
+```
+
+Linux:
+```bash
 source venv/bin/activated
 ```
 
@@ -142,25 +151,51 @@ source venv/bin/activated
 
 ```bash
 cd bewise
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-- Создайте базу и пользователя в PosgreSQL:
-```bash
-sudo -u postgres psql
-CREATE DATABASE basename;
-CREATE USER username WITH ENCRYPTED PASSWORD 'password';
-GRANT ALL PRIVILEGES ON DATABASE basename TO username;
 ```
 
-- Прописываем данные для работы в dev режиме:
+```bash
+python -m pip install --upgrade pip
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+- Создайте базу и пользователя в PosgreSQL:
+
+Linux:
+```bash
+sudo -u postgres psql
+```
+```sql
+CREATE DATABASE bewise_test;
+```
+```sql
+CREATE USER tuser_bewise WITH ENCRYPTED PASSWORD '@test#bewise';
+```
+```sql
+GRANT ALL PRIVILEGES ON DATABASE bewise_test TO tuser_bewise;
+```
+
+Windows, запустите SQL Shell (psql):
+```sql
+CREATE DATABASE bewise_test;
+```
+```sql
+CREATE USER tuser_bewise WITH ENCRYPTED PASSWORD '@test#bewise';
+```
+```sql
+GRANT ALL PRIVILEGES ON DATABASE bewise_test TO tuser_bewise;
+```
+
+- Прописываем данные для работы в dev режиме в .env файл (там где у нас файл settings.py):
 
 ```bash
 DB_ENGINE='django.db.backends.postgresql'
-POSTGRES_DB='basename'
-POSTGRES_USER='username'
-POSTGRES_PASSWORD='password'
-DB_HOST='db'
+POSTGRES_DB='bewise_test'
+POSTGRES_USER='tuser_bewise'
+POSTGRES_PASSWORD='@test#bewise'
+DB_HOST='127.0.0.1'
 DB_PORT='5432'
 SECRET_KEY='put_your_code'
 ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
@@ -183,5 +218,7 @@ python manage.py runserver
 
 ### Документация к API доступна после запуска
 ```text
-http://127.0.0.1/api/post/
+http://127.0.0.1:8000/api/post/
 ```
+
+Автор: [Клепиков Дмитрий](https://github.com/themasterid)
