@@ -7,7 +7,7 @@
 - Python 3.10
 - Docker
 - docker-compose
-- Django 3
+- Django 3.2.15
 - Django REST framework
 - CI/CD
 - PostgreSQL
@@ -78,10 +78,10 @@ touch .env
 
 ```bash
 DB_ENGINE='django.db.backends.postgresql'
-POSTGRES_DB='bewise_test'
-POSTGRES_USER='tuser_bewise'
-POSTGRES_PASSWORD='@test#bewise'
-DB_HOST='127.0.0.1'
+POSTGRES_DB='bewise'
+POSTGRES_USER='bewise_u'
+POSTGRES_PASSWORD='put_your_password'
+DB_HOST='db'
 DB_PORT='5432'
 SECRET_KEY='put_your_code'
 ALLOWED_HOSTS='127.0.0.1, localhost, backend, ip_server'
