@@ -79,7 +79,7 @@ def get_unique(request: Any) -> Dict[str, int]:
 
     for items in get_response(request):
         text_question = items.get('question'),
-        if Requests.objects.filter(
+        if Requests.objects.select_related('text_question').filter(
                 text_question=text_question[0]
         ).exists():
             items = get_unique(request)
