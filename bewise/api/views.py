@@ -19,6 +19,16 @@ def get_response(request: Any) -> List[Dict[str, int]]:
         f'{url}{request_}').json()
 
 
+def get_context():
+    answer = Requests.objects.last()
+    return {
+        'id': answer.id_req,
+        'question': answer.text_question,
+        'answer': answer.text_answer,
+        'created': answer.created_at,
+    }
+
+
 @api_view(['post', 'get'])
 def get_questions(request: Any) -> Any:
     """
@@ -28,14 +38,23 @@ def get_questions(request: Any) -> Any:
     """
 
     request_: Union[int, None] = request.data.get('questions_num')
+
     if request_ is None:
         return Response(
-                    {'question': f'{Requests.objects.all().last()}'},
-                    status=status.HTTP_204_NO_CONTENT)
+            get_context(),
+            status=status.HTTP_204_NO_CONTENT)
+    if request_ not in range(1, 101):
+        return Response(
+            {'error': 'questions_num < 1 or questions_num > 100'},
+            status=status.HTTP_204_NO_CONTENT)
     if request_:
-        text_ = get_response(request)
-        for items in text_:
-            text_question = items.get('question'),
+        for items in get_response(request):
+            try:
+                text_question = items.get('question'),
+            except AttributeError:
+                return Response(
+                    {'error': 'questions_num < 1'},
+                    status=status.HTTP_204_NO_CONTENT)
             if Requests.objects.filter(
                     text_question=text_question[0]).exists():
                 items = get_unique(request)
@@ -45,8 +64,8 @@ def get_questions(request: Any) -> Any:
                 text_question=items.get('question'),
                 created_at=items.get('created_at'))
         return Response(
-                    {'question': f'{Requests.objects.all().last()}'},
-                    status=status.HTTP_204_NO_CONTENT)
+            get_context(),
+            status=status.HTTP_204_NO_CONTENT)
     return Response(
         {'question': ''},
         status=status.HTTP_204_NO_CONTENT)
