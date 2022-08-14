@@ -1,7 +1,10 @@
 [![test_bewise workflow](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml/badge.svg)](https://github.com/themasterid/test_bewise/actions/workflows/test_bewise.yml)
 # Тестовое задание bewise
 
-Задание доступно по адресу http://62.84.115.143/api/post/ до 14.07.2022 г.
+Задание доступно по адресу http://хх.хх.хх.хх/api/post/ до 14.07.2022 г. 
+Статус на 15.08.2022 (отключен).
+
+Примечание: Больше не рассматривать данное тестовое и работодателя, причина не пунктуальны, безответственны, несерьезны.
 
 # Стек
 - Python 3.10
