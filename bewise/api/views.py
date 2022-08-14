@@ -19,8 +19,11 @@ def get_response(request: Any) -> List[Dict[str, int]]:
         f'{url}{request_}').json()
 
 
-def get_context():
+def get_context() -> Union[dict, str]:
     answer = Requests.objects.last()
+    if answer is None:
+        return {
+            "info": "Send POST requests: {'questions_num': 1}"}
     return {
         'id': answer.id_req,
         'question': answer.text_question,
